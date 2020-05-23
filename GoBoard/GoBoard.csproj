@@ -13,6 +13,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <None Include="web.config" CopyToPublishDirectory="Always" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.4" />
   </ItemGroup>
 
