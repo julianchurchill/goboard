@@ -7,3 +7,16 @@ script:
   - dotnet restore
   - dotnet build
   - dotnet test
+  - cd GoBoard && dotnet publish -o site && cd site && zip ../site.zip * && cd .. && zip aws-deploy.zip site.zip aws-windows-deployment-manifest.json
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: $ACCESSKEYID
+  secret_access_key: $SECRETACCESSKEY
+  region: "eu-west-2"
+  app: "GoBoard"
+  env: "Goboard-env"
+  bucket: "elasticbeanstalk-eu-west-2-813514581751"
+  zip_file: aws-deploy.zip
+  on:
+    branch: master
+  edge: true
