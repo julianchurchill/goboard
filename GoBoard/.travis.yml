@@ -7,7 +7,6 @@ script:
   - dotnet restore
   - dotnet build
   - dotnet test
-  - dotnet publish
 deploy:
   provider: elasticbeanstalk
   access_key_id:
