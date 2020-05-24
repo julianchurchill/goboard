@@ -229,3 +229,11 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# Visual Code
+.vscode
+
+# .NET publish output
+site
+site.zip
+GoBoard.zip
