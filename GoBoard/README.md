@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.com/julianchurchill/goboard.svg?branch=master)](https://travis-ci.com/julianchurchill/goboard)
