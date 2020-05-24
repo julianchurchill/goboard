@@ -10,7 +10,7 @@ script:
   - dotnet restore
   - dotnet build
   - dotnet test
-  - dotnet publish -o GoBoard/site && cd GoBoard/site && zip ../site.zip * && cd .. && zip aws-deploy.zip site.zip aws-windows-deployment-manifest.json
+  - dotnet publish -o GoBoard/site && cd GoBoard/site && zip ../site.zip * && cd .. && zip -r aws-deploy.zip site.zip aws-windows-deployment-manifest.json
 deploy:
   provider: elasticbeanstalk
   access_key_id: $ACCESSKEYID
