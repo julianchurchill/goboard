@@ -10,7 +10,7 @@ script:
   - dotnet restore
   - dotnet build
   - dotnet test
-  - dotnet publish -o GoBoard/site && cd GoBoard/site && zip ../site.zip * && cd .. && zip ../aws-deploy.zip site.zip aws-windows-deployment-manifest.json
+  - dotnet publish -o GoBoard/site && cd GoBoard/site && zip ../site.zip * && cd .. && zip aws-deploy.zip site.zip aws-windows-deployment-manifest.json
 deploy:
   provider: elasticbeanstalk
   access_key_id: $ACCESSKEYID
@@ -20,6 +20,7 @@ deploy:
   env: "Goboard-env"
   bucket: "elasticbeanstalk-eu-west-2-813514581751"
   zip_file: aws-deploy.zip
+  cleanup: false
   on:
     branch: master
   edge: true
