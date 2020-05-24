@@ -9,13 +9,12 @@ script:
   - dotnet test
 deploy:
   provider: elasticbeanstalk
-  access_key_id:
-    secure: "$ACCESSKEYID"
-  secret_access_key:
-    secure: "$SECRETACCESSKEY"
+  access_key_id: $ACCESSKEYID
+  secret_access_key: $SECRETACCESSKEY
   region: "eu-west-2"  
   app: "GoBoard"
   env: "Goboard-env"
-  bucket_name: "elasticbeanstalk:eu-west-2:813514581751"
+  bucket: "elasticbeanstalk-eu-west-2-813514581751"
   on:
     branch: master
+  edge: true
