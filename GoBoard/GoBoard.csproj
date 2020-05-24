@@ -10,6 +10,9 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    
+    <Version Condition=" '$(BUILD_BUILDNUMBER)' == '' ">1.2.3.4-Dev</Version>
+    <Version Condition=" '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</Version>
   </PropertyGroup>
 
   <ItemGroup>

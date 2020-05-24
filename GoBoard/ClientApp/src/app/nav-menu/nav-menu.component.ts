@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-nav-menu',
@@ -7,6 +8,14 @@ import { Component } from '@angular/core';
 })
 export class NavMenuComponent {
   isExpanded = false;
+  public version: VersionInfo;
+
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    http.get<VersionInfo>(baseUrl + 'api/v1/version').subscribe(result => {
+      console.log(`version result ${result}`);
+      this.version = result;
+    }, error => console.error(error));
+  }
 
   collapse() {
     this.isExpanded = false;
@@ -15,4 +24,8 @@ export class NavMenuComponent {
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
+}
+
+interface VersionInfo {
+  name: string;
 }
