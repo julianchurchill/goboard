@@ -9,7 +9,8 @@ script:
   - dotnet test
 deploy:
   provider: elasticbeanstalk
-  access_key_id: $ACCESSKEYID
+  access_key_id:
+    secure: "$ACCESSKEYID"
   secret_access_key:
     secure: "$SECRETACCESSKEY"
   region: "eu-west-2"  
