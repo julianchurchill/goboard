@@ -25,3 +25,8 @@
 #move-list-container {
     margin-left: 10px;
 }
+
+.move-list-go-stone {
+    height: 25px;
+    width: 25px;
+}

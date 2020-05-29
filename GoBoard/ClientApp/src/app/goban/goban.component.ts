@@ -1,20 +1,24 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 
 import { StoneModel } from '../models/stone.model';
 import { GobanStoreService } from '../services/goban-store/goban-store.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-goban-component',
     templateUrl: './goban.component.html',
     styleUrls: ['./goban.component.css']
 })
-export class GobanComponent implements AfterViewInit {
+export class GobanComponent implements AfterViewInit, OnDestroy {
     @ViewChild('canvas', { static: false })
     public canvas: ElementRef;
+    @ViewChild('goStoneBlackSource', { static: false })
+    public blackStoneImage: ElementRef;
 
-    private cx: CanvasRenderingContext2D;
-    private width = 500;    // TODO: Derive this from the div size
-    private height = 500;   // TODO: Derive this from the div size
+    private readonly width = 500;    // TODO: Derive this from the div size
+    private readonly height = 500;   // TODO: Derive this from the div size
+
+    private stonesSubscription: Subscription;
 
     constructor(
        private gobanStore: GobanStoreService
@@ -23,36 +27,35 @@ export class GobanComponent implements AfterViewInit {
 
     public ngAfterViewInit(): void {
       const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
-      this.cx = canvasEl.getContext('2d');
   
       canvasEl.width = this.width;
       canvasEl.height = this.height;
   
-      this.cx.lineWidth = 3;
-      this.cx.lineCap = 'round';
-      this.cx.strokeStyle = '#000';
-  
-      this.drawStones(canvasEl);
+      this.drawStones(canvasEl.getContext('2d'));
     }
 
-    private drawStones(canvasEl: HTMLCanvasElement): void {
-        this.gobanStore.stones$.subscribe(stones => {
+    public ngOnDestroy(): void {
+        if (this.stonesSubscription) {
+            this.stonesSubscription.unsubscribe();
+        }
+    }
+
+    private drawStones(cx: CanvasRenderingContext2D): void {
+        this.stonesSubscription = this.gobanStore.stones$.subscribe(stones => {
             stones.forEach(stone => {
-                this.drawStone(stone);
+                this.drawStone(cx, stone);
             });
         });
     }
 
-    private drawStone(stone: StoneModel): void {
-        if (!this.cx) { return; }
+    private drawStone(cx: CanvasRenderingContext2D, stone: StoneModel): void {
+        if (!cx) { return; }
 
-        this.cx.beginPath();
-    
         const canvasX = this.findCanvasX(stone.x);
         const canvasY = this.findCanvasY(stone.y);
-        this.cx.moveTo(canvasX, canvasY);
-        this.cx.lineTo(canvasX + 3, canvasY + 3);
-        this.cx.stroke();
+
+        const blackStone: HTMLImageElement = this.blackStoneImage.nativeElement;
+        cx.drawImage(blackStone, canvasX, canvasY, 25, 25);
     }
     
     private findCanvasX(boardX: number): number {

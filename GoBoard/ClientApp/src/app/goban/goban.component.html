@@ -2,9 +2,19 @@
     <div id="goban" (click)="onClick($event)">
         <img id="goban-img" src="assets/img/goban_19x19.png">
         <canvas #canvas id="goban-canvas"></canvas>
+        <div style="display:none;">
+            <img #goStoneBlackSource
+                src="assets/img/Realistic_Black_Go_Stone.svg"
+                width="25" height="25">
+            <img #goStoneWhiteSource
+                src="assets/img/Realistic_White_Go_Stone.svg"
+                width="25" height="25">
+        </div>
     </div>
     <div id="move-list-container">
         <h2>Move list</h2>
+        <img id="go-stone-black-img" class="move-list-go-stone" src="assets/img/Realistic_Black_Go_Stone.svg">
+        <img id="go-stone-white-img" class="move-list-go-stone" src="assets/img/Realistic_White_Go_Stone.svg">
         <ul>
             <li *ngFor="let stone of gobanStore.stones$ | async">{{stone.x}},{{stone.y}}</li>
         </ul>
