@@ -1,15 +1,27 @@
-.goban-container {
+#goban-container {
     display: flex;
 }
 
-.goban {
+#goban {
     min-height: 500px;
     min-width: 500px;
     height: 500px;
     width: 500px;
+    position: relative;
 }
 
-.goban-img {
+#goban-img {
     height: 100%;
     width: 100%;
+    position: absolute;
+    z-index: 1;
+}
+
+#goban-canvas {
+    position: relative;
+    z-index: 20;
+}
+
+#move-list-container {
+    margin-left: 10px;
 }

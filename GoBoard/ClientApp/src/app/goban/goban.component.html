@@ -1,8 +1,10 @@
-<div class="goban-container">
-    <div class="goban" (click)="onClick($event)">
-        <img class="goban-img" src="assets/img/goban_19x19.png">
+<div id="goban-container">
+    <div id="goban" (click)="onClick($event)">
+        <img id="goban-img" src="assets/img/goban_19x19.png">
+        <canvas #canvas id="goban-canvas"></canvas>
     </div>
-    <div>
+    <div id="move-list-container">
+        <h2>Move list</h2>
         <ul>
             <li *ngFor="let stone of gobanStore.stones$ | async">{{stone.x}},{{stone.y}}</li>
         </ul>
