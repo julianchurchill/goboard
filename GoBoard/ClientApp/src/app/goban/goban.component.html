@@ -1,3 +1,10 @@
-<div class="goban" (click)="onClick($event)">
-    <img class="goban-img" src="assets/img/goban_19x19.png">
+<div class="goban-container">
+    <div class="goban" (click)="onClick($event)">
+        <img class="goban-img" src="assets/img/goban_19x19.png">
+    </div>
+    <div>
+        <ul>
+            <li *ngFor="let stone of stones$ | async">{{stone.x}},{{stone.y}}</li>
+        </ul>
+    </div>
 </div>
