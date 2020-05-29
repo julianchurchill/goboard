@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { GobanComponent } from './goban/goban.component';
+import { GobanStoreService } from './services/goban-store/goban-store.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { GobanComponent } from './goban/goban.component';
       { path: 'goban', component: GobanComponent },
     ])
   ],
-  providers: [],
+  providers: [GobanStoreService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

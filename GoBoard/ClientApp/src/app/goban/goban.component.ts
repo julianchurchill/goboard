@@ -1,31 +1,31 @@
 import { Component } from '@angular/core';
-import { Subject } from 'rxjs';
-
-class Stone {
-  x: number;
-  y: number;
-
-  constructor(x: number, y: number) {
-    this.x = x;
-    this.y = y;
-  }
-}
+import { StoneModel } from '../models/stone.model';
+import { GobanStoreService } from '../services/goban-store/goban-store.service';
 
 @Component({
-  selector: 'app-goban-component',
-  templateUrl: './goban.component.html',
-  styleUrls: ['./goban.component.css']
+    selector: 'app-goban-component',
+    templateUrl: './goban.component.html',
+    styleUrls: ['./goban.component.css']
 })
 export class GobanComponent {
-  private stones: Stone[] = [];
-  private $stones = new Subject<Stone[]>();
-  public stones$ = this.$stones.asObservable();
-
-  public onClick(event: MouseEvent) {
-    const x = event.offsetX;
-    const y = event.offsetY;
-    console.log(`Clicked at ${x}, ${y}`);
-    this.stones = [...this.stones, new Stone(x, y)];
-    this.$stones.next(this.stones);
-  }
+    constructor(
+    private gobanStore: GobanStoreService
+    ) {
+    }
+    
+    public onClick(event: MouseEvent) {
+        const x = this.findBoardX(event.offsetX);
+        const y = this.findBoardY(event.offsetY);
+        this.gobanStore.addStone(new StoneModel(x, y));
+    }
+    
+    private findBoardX(screenX: number): number {
+        // TODO
+        return screenX;
+    }
+    
+    private findBoardY(screenY: number): number {
+        // TODO
+        return screenY;
+    }
 }
