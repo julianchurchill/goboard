@@ -19,10 +19,10 @@ describe('GobanComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should display a title', async(() => {
-    const titleText = fixture.nativeElement.querySelector('h1').textContent;
-    expect(titleText).toEqual('Goban');
-  }));
+//   it('should display a title', async(() => {
+//     const titleText = fixture.nativeElement.querySelector('h1').textContent;
+//     expect(titleText).toEqual('Goban');
+//   }));
 
 //   it('should start with count 0, then increments by 1 when clicked', async(() => {
 //     const countElement = fixture.nativeElement.querySelector('strong');
