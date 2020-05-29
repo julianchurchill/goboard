@@ -9,7 +9,7 @@ import { GobanStoreService } from '../services/goban-store/goban-store.service';
 })
 export class GobanComponent {
     constructor(
-    private gobanStore: GobanStoreService
+       private gobanStore: GobanStoreService
     ) {
     }
     

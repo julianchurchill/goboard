@@ -1,6 +1,8 @@
 import { StoneModel } from 'src/app/models/stone.model';
 import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class GobanStoreService {
     private $stones = new BehaviorSubject<StoneModel[]>([]);
     public stones$ = this.$stones.asObservable();
