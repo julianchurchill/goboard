@@ -16,7 +16,7 @@
         <img id="go-stone-black-img" class="move-list-go-stone" src="assets/img/Realistic_Black_Go_Stone.svg">
         <img id="go-stone-white-img" class="move-list-go-stone" src="assets/img/Realistic_White_Go_Stone.svg">
         <ul>
-            <li *ngFor="let stone of gobanStore.stones$ | async">{{stone.x}},{{stone.y}}</li>
+            <li *ngFor="let stone of stones$ | async">{{stone.x}},{{stone.y}}</li>
         </ul>
     </div>
 </div>

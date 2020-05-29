@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@ang
 
 import { StoneModel } from '../models/stone.model';
 import { GobanStoreService } from '../services/goban-store/goban-store.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
     selector: 'app-goban-component',
@@ -20,6 +20,10 @@ export class GobanComponent implements AfterViewInit, OnDestroy {
 
     private stonesSubscription: Subscription;
 
+    public get stones$(): Observable<StoneModel[]> {
+        return this.gobanStore.stones$;
+    }
+
     constructor(
        private gobanStore: GobanStoreService
     ) {
@@ -27,10 +31,10 @@ export class GobanComponent implements AfterViewInit, OnDestroy {
 
     public ngAfterViewInit(): void {
       const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
-  
+
       canvasEl.width = this.width;
       canvasEl.height = this.height;
-  
+
       this.drawStones(canvasEl.getContext('2d'));
     }
 
@@ -57,12 +61,12 @@ export class GobanComponent implements AfterViewInit, OnDestroy {
         const blackStone: HTMLImageElement = this.blackStoneImage.nativeElement;
         cx.drawImage(blackStone, canvasX, canvasY, 25, 25);
     }
-    
+
     private findCanvasX(boardX: number): number {
         // TODO
         return boardX;
     }
-    
+
     private findCanvasY(boardY: number): number {
         // TODO
         return boardY;
@@ -78,7 +82,7 @@ export class GobanComponent implements AfterViewInit, OnDestroy {
         // TODO
         return canvasX;
     }
-    
+
     private findBoardY(canvasY: number): number {
         // TODO
         return canvasY;

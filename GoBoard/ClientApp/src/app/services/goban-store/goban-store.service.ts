@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class GobanStoreService {
     private $stones = new BehaviorSubject<StoneModel[]>([]);
     public stones$ = this.$stones.asObservable();
-    
+
     public addStone(stone: StoneModel) {
         console.log(`Adding stone at ${stone.x}, ${stone.y}`);
         this.$stones.next(
