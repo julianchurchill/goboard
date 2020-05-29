@@ -12,7 +12,6 @@ export class NavMenuComponent {
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     http.get<VersionInfo>(baseUrl + 'api/v1/version').subscribe(result => {
-      console.log(`version result ${result}`);
       this.version = result;
     }, error => console.error(error));
   }
