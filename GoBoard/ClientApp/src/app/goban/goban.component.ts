@@ -15,8 +15,9 @@ export class GobanComponent implements AfterViewInit, OnDestroy {
     @ViewChild('goStoneBlackSource', { static: false })
     public blackStoneImage: ElementRef;
 
-    private readonly width = 500;    // TODO: Derive this from the div size
-    private readonly height = 500;   // TODO: Derive this from the div size
+    private readonly boardSizeInPixels = 500;    // TODO: Derive this from the div size
+    private readonly boardSize = 19;
+    private readonly boardStepSize = this.boardSizeInPixels / this.boardSize;
 
     private stonesSubscription: Subscription;
 
@@ -32,8 +33,8 @@ export class GobanComponent implements AfterViewInit, OnDestroy {
     public ngAfterViewInit(): void {
       const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
 
-      canvasEl.width = this.width;
-      canvasEl.height = this.height;
+      canvasEl.width = this.boardSizeInPixels;
+      canvasEl.height = this.boardSizeInPixels;
 
       this.drawStones(canvasEl.getContext('2d'));
     }
@@ -59,17 +60,15 @@ export class GobanComponent implements AfterViewInit, OnDestroy {
         const canvasY = this.findCanvasY(stone.y);
 
         const blackStone: HTMLImageElement = this.blackStoneImage.nativeElement;
-        cx.drawImage(blackStone, canvasX, canvasY, 25, 25);
+        cx.drawImage(blackStone, canvasX, canvasY, this.boardStepSize, this.boardStepSize);
     }
 
     private findCanvasX(boardX: number): number {
-        // TODO
-        return boardX;
+        return boardX * this.boardStepSize;
     }
 
     private findCanvasY(boardY: number): number {
-        // TODO
-        return boardY;
+        return boardY * this.boardStepSize;
     }
 
     public onClick(event: MouseEvent): void {
@@ -79,12 +78,10 @@ export class GobanComponent implements AfterViewInit, OnDestroy {
     }
 
     private findBoardX(canvasX: number): number {
-        // TODO
-        return canvasX;
+        return Math.floor(canvasX / this.boardStepSize);
     }
 
     private findBoardY(canvasY: number): number {
-        // TODO
-        return canvasY;
+        return Math.floor(canvasY / this.boardStepSize);
     }
 }
