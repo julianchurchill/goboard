@@ -1,8 +1,9 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 
-import { StoneModel } from '../models/stone.model';
+import { StoneModel, StoneColour } from '../models/stone.model';
 import { GobanStoreService } from '../services/goban-store/goban-store.service';
 import { Subscription, Observable } from 'rxjs';
+import { PointModel } from '../models/point.model';
 
 @Component({
     selector: 'app-goban-component',
@@ -15,9 +16,13 @@ export class GobanComponent implements AfterViewInit, OnDestroy {
     @ViewChild('goStoneBlackSource', { static: false })
     public blackStoneImage: ElementRef;
 
+    public currentPlayerColour = StoneColour.Black;
+
     private readonly boardSizeInPixels = 500;    // TODO: Derive this from the div size
     private readonly boardSize = 19;
     private readonly boardStepSize = this.boardSizeInPixels / this.boardSize;
+    private readonly boardCanvasWidth = this.boardSizeInPixels;
+    private readonly boardCanvasHeight = this.boardSizeInPixels;
 
     private stonesSubscription: Subscription;
 
@@ -33,8 +38,8 @@ export class GobanComponent implements AfterViewInit, OnDestroy {
     public ngAfterViewInit(): void {
       const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
 
-      canvasEl.width = this.boardSizeInPixels;
-      canvasEl.height = this.boardSizeInPixels;
+      canvasEl.width = this.boardCanvasWidth;
+      canvasEl.height = this.boardCanvasHeight;
 
       this.drawStones(canvasEl.getContext('2d'));
     }
@@ -47,6 +52,7 @@ export class GobanComponent implements AfterViewInit, OnDestroy {
 
     private drawStones(cx: CanvasRenderingContext2D): void {
         this.stonesSubscription = this.gobanStore.stones$.subscribe(stones => {
+            cx.clearRect(0, 0, this.boardCanvasWidth, this.boardCanvasHeight);
             stones.forEach(stone => {
                 this.drawStone(cx, stone);
             });
@@ -74,7 +80,12 @@ export class GobanComponent implements AfterViewInit, OnDestroy {
     public onClick(event: MouseEvent): void {
         const x = this.findBoardX(event.offsetX);
         const y = this.findBoardY(event.offsetY);
-        this.gobanStore.addStone(new StoneModel(x, y));
+
+        if (this.gobanStore.hasStoneAtPoint(new PointModel(x, y))) {
+            this.gobanStore.removeStone(new PointModel(x, y));
+        } else {
+            this.gobanStore.addStone(new StoneModel(x, y, this.currentPlayerColour));
+        }
     }
 
     private findBoardX(canvasX: number): number {
