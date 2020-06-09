@@ -8,6 +8,10 @@
     height: 500px;
     width: 500px;
     position: relative;
+    /* Avoid highlighting on double click */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 #goban-img {
